@@ -1,8 +1,14 @@
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://yourapi.com';
 
+let unauthorizedHandler = null;
+
+export function setUnauthorizedHandler(fn) {
+  unauthorizedHandler = fn;
+}
+
 async function fetchWithAuth(endpoint, options = {}) {
   const url = `${API_BASE_URL}${endpoint}`;
-  
+
   const headers = {
     ...options.headers,
   };
@@ -17,6 +23,10 @@ async function fetchWithAuth(endpoint, options = {}) {
     headers,
     credentials: 'include', // Include cookies for session auth
   });
+
+  if (response.status === 401 && endpoint !== '/v1/auth/session') {
+    unauthorizedHandler?.();
+  }
 
   if (!response.ok) {
     const error = await response.json().catch(() => ({ error: 'Request failed' }));

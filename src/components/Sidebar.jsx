@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom';
-import { FileText, FolderOpen, Zap } from 'lucide-react';
+import { FileText, FolderOpen, Zap, LogOut } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
 const navItems = [
   { to: '/files', icon: FolderOpen, label: 'Files' },
@@ -7,6 +8,8 @@ const navItems = [
 ];
 
 export default function Sidebar() {
+  const { logout } = useAuth();
+
   return (
     <aside className="fixed left-0 top-0 h-screen w-64 bg-brand-900 flex flex-col">
       {/* Logo */}
@@ -48,12 +51,19 @@ export default function Sidebar() {
       </nav>
 
       {/* Footer */}
-      <div className="p-4 border-t border-brand-800">
+      <div className="p-4 border-t border-brand-800 space-y-2">
         <div className="px-4 py-3 rounded-xl bg-brand-800/50">
           <p className="text-brand-400 text-xs">
             Files expire 24h after first download
           </p>
         </div>
+        <button
+          onClick={logout}
+          className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-brand-300 hover:bg-brand-800/50 hover:text-white transition-all duration-200"
+        >
+          <LogOut className="w-5 h-5" />
+          <span className="font-medium text-sm">Sign out</span>
+        </button>
       </div>
     </aside>
   );
