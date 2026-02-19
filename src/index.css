@@ -1,0 +1,113 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "DM Sans", system-ui, sans-serif;
+  --font-body: "DM Sans", system-ui, sans-serif;
+  
+  --color-brand-50: #f0fdfa;
+  --color-brand-100: #ccfbf1;
+  --color-brand-200: #99f6e4;
+  --color-brand-300: #5eead4;
+  --color-brand-400: #2dd4bf;
+  --color-brand-500: #14b8a6;
+  --color-brand-600: #0d9488;
+  --color-brand-700: #0f766e;
+  --color-brand-800: #115e59;
+  --color-brand-900: #134e4a;
+  --color-brand-950: #042f2e;
+  
+  --color-accent-500: #f97316;
+  --color-accent-600: #ea580c;
+  
+  --color-surface: #f8fafc;
+  --color-surface-raised: #ffffff;
+  --color-surface-overlay: #f1f5f9;
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+  
+  html {
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  body {
+    margin: 0;
+    background-color: var(--color-surface);
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 
+           bg-accent-500 hover:bg-accent-600 text-white font-medium 
+           rounded-lg transition-all duration-200 ease-out
+           shadow-sm hover:shadow-md active:scale-[0.98];
+  }
+  
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 
+           bg-white hover:bg-slate-50 text-slate-700 font-medium 
+           rounded-lg border border-slate-200 transition-all duration-200 ease-out
+           shadow-sm hover:shadow active:scale-[0.98];
+  }
+  
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 px-3 py-2 
+           text-slate-600 hover:text-slate-900 hover:bg-slate-100
+           rounded-lg transition-all duration-200 ease-out;
+  }
+  
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 
+           bg-red-500 hover:bg-red-600 text-white font-medium 
+           rounded-lg transition-all duration-200 ease-out
+           shadow-sm hover:shadow-md active:scale-[0.98];
+  }
+  
+  .card {
+    @apply bg-white rounded-xl border border-slate-200/60 shadow-sm;
+  }
+  
+  .input {
+    @apply w-full px-4 py-2.5 bg-white border border-slate-200 rounded-lg
+           text-slate-900 placeholder:text-slate-400
+           focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500
+           transition-all duration-200;
+  }
+  
+  .textarea {
+    @apply w-full px-4 py-3 bg-white border border-slate-200 rounded-lg
+           text-slate-900 placeholder:text-slate-400 resize-none
+           focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500
+           transition-all duration-200;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Sonner toast overrides */
+[data-sonner-toaster] {
+  font-family: var(--font-body) !important;
+}
