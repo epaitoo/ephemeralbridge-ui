@@ -24,6 +24,15 @@ async function fetchWithAuth(endpoint, options = {}) {
     credentials: 'include', // Include cookies for session auth
   });
 
+  // Check if redirected to Cloudflare Access login
+  if (response.redirected && response.url.includes('cloudflareaccess.com')) {
+    // Redirect user to API to complete Cloudflare Access auth
+    // After auth, Cloudflare will redirect back to the API, then we reload
+    window.location.href = `${API_BASE_URL}/v1/auth/session?redirect=${encodeURIComponent(window.location.href)}`;
+    // Return a pending promise to stop further execution
+    return new Promise(() => {});
+  }
+
   if (response.status === 401 && endpoint !== '/v1/auth/session') {
     unauthorizedHandler?.();
   }
