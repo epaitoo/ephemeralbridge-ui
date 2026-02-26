@@ -5,6 +5,7 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import Layout from './components/Layout';
 import FilesPage from './pages/FilesPage';
 import TextsPage from './pages/TextsPage';
+import DemoPage from './pages/DemoPage';
 
 function AuthGate({ children }) {
   const { status, error, retry } = useAuth();
@@ -58,15 +59,23 @@ export default function App() {
         }}
       />
       <AuthProvider>
-        <AuthGate>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<Navigate to="/files" replace />} />
-              <Route path="files" element={<FilesPage />} />
-              <Route path="texts" element={<TextsPage />} />
-            </Route>
-          </Routes>
-        </AuthGate>
+        <Routes>
+          <Route path="demo" element={<DemoPage />} />
+          <Route
+            path="/*"
+            element={
+              <AuthGate>
+                <Routes>
+                  <Route path="/" element={<Layout />}>
+                    <Route index element={<Navigate to="/files" replace />} />
+                    <Route path="files" element={<FilesPage />} />
+                    <Route path="texts" element={<TextsPage />} />
+                  </Route>
+                </Routes>
+              </AuthGate>
+            }
+          />
+        </Routes>
       </AuthProvider>
     </BrowserRouter>
   );
