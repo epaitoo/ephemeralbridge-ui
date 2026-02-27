@@ -58,12 +58,12 @@ export default function App() {
           },
         }}
       />
-      <AuthProvider>
-        <Routes>
-          <Route path="demo" element={<DemoPage />} />
-          <Route
-            path="/*"
-            element={
+      <Routes>
+        <Route path="demo" element={<DemoPage />} />
+        <Route
+          path="/*"
+          element={
+            <AuthProvider>
               <AuthGate>
                 <Routes>
                   <Route path="/" element={<Layout />}>
@@ -73,10 +73,10 @@ export default function App() {
                   </Route>
                 </Routes>
               </AuthGate>
-            }
-          />
-        </Routes>
-      </AuthProvider>
+            </AuthProvider>
+          }
+        />
+      </Routes>
     </BrowserRouter>
   );
 }
