@@ -15,8 +15,10 @@ export function AuthProvider({ children }) {
       await authApi.createSession();
       setStatus('authenticated');
     } catch (err) {
-      setError(err.message || 'Authentication failed');
-      setStatus('error');
+      // If session creation fails, redirect to API for Cloudflare Access auth
+      const currentUrl = window.location.href;
+      const apiUrl = import.meta.env.VITE_API_URL 
+      window.location.href = `${apiUrl}/v1/auth/session?redirect=${encodeURIComponent(currentUrl)}`;
     }
   }, []);
 
